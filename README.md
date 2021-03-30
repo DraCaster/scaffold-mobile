@@ -3,12 +3,12 @@ A basic template for mobile development, developed with NativeScript and VueJS
 
 ### Features
 
-coming soon
+:heavy_check_mark: Integrations with the operating system (Camera , GPS, others)
 
 ### Roadmap
 
 - i18n
-- Integrations with the operating system (Camera , GPS, others)
+- Vuex
 - Possibility to connect to an API using GraphQL
 
 ## Project setup
