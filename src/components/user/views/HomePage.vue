@@ -3,22 +3,50 @@
     <ActionBar title="Inicio"/>
     <ScrollView>
       <StackLayout class="home-panel">
-        <Label textWrap="true" text="Holaaa!!"
+        <Label textWrap="true" text="Hola!!"
                class="h2 text-center"/>
-        <Img
-            src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2020/09/como-conseguir-pikachu-gorra-pokemon-espada-escudo-2083655.jpg"
-            stretch="none"
-            horizontalAlignment="center"/>
+        <Button text="Tomar foto" @tap="onButtonTapForCamera" fontWeight="bold" class="button"/>
+        <Button text="gps" @tap="onButtonTapForGPS" fontWeight="bold" class="button"/>
       </StackLayout>
     </ScrollView>
   </Page>
 </template>
 <script>
-import {mapState} from "vuex"
+//import {mapState} from "vuex"
+import {requestPermissions, takePicture} from "nativescript-camera";
+import {enableLocationRequest, getCurrentLocation} from "nativescript-geolocation";
+import {Accuracy} from "@nativescript/core/ui/enums";
+import gql from "graphql-tag";
 
 export default {
-  computed: {
+  /*computed: {
     ...mapState(["username"])
+  },*/
+
+  methods:{
+    onButtonTapForCamera(){
+      requestPermissions()
+      .then(() => {
+        takePicture()
+      })
+    },
+    onButtonTapForGPS(){
+      enableLocationRequest()
+      .then(() => {
+        getCurrentLocation({ desiredAccuracy: Accuracy.high, maximumAge: 5000, timeout: 20000 })
+      })
+    }
+  },
+  apollo: {
+    person: gql
+        ` query {
+                person($id:"6009a8c44a129c5b6b854c9b"){
+                    person(id: $id)
+                    name
+                    lastname
+                }
+          }
+     `
   }
 }
 </script>
